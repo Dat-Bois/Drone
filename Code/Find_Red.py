@@ -21,7 +21,7 @@ def get_red(frame):
     #dilated = cv2.dilate(mask_final, kernel, iterations=3)
     font = cv2.FONT_HERSHEY_SIMPLEX
     cnts = cv2.findContours(eroded.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
-    values = 0
+    values = [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), 0]
     if len(cnts) > 0:
         c = max(cnts, key=cv2.contourArea)
         area = cv2.contourArea(c)
