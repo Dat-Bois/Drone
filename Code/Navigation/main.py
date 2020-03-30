@@ -1,5 +1,3 @@
-from dronekit import connect, VehicleMode, LocationGlobalRelative
-from pymavlink import mavutil
 import time
 from logger import log, flush
 import Movement
