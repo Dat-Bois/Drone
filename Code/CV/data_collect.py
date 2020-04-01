@@ -5,6 +5,7 @@ import argparse
 import math
 import time
 from Find_Red import get_red
+#from servo import move_servo, clean_servo
 
 cap = cv2.VideoCapture(0)
 
@@ -19,6 +20,7 @@ k_width = 0.75
 k_pixWidth = 72
 focal_length = (k_pixWidth * k_distance) / k_width
 distance = 0
+current_position = 90
 def distance_to_camera(width, focal_length, per_width):
     return int((width*focal_length) / per_width)
 
@@ -31,7 +33,7 @@ def centered(x, y, distance):
     max_far = 8
     if x >= max_left and x <= max_right and y >= max_up and y <= max_down and distance >= max_close and distance <= max_far:
             print("Centered at: ", center)
-    else:
+'''    else:
         if x >= max_left and x <= max_right:
             print("x-centered")
         elif x >= max_right:
@@ -49,7 +51,7 @@ def centered(x, y, distance):
         elif distance >= max_far:
             print("Move closer")
         else:
-            print("Move farther")
+            print("Move farther")'''
 while (True):
     ret, frame = cap.read()
     if ret == True:
@@ -58,7 +60,7 @@ while (True):
         width = cord[1][0] - cord[0][0]
         if width != 0:
             distance = distance_to_camera(k_width, focal_length, width)
-            print(distance)
+            #print(distance)
         #-----------------
         #----Center------
         center = cord[4]
@@ -66,7 +68,24 @@ while (True):
         y = center[1]
         centered(x, y, distance)
         #-----------------
+        #-----Degrees-----
+        x_val = cord[0][0]
+        if x_val != 0 or cord[1][0] != 0:
+            Degree = 0.07407407407407407407407407407407 #assuming camera is at 90 postion
+            Degree = Degree * x_val
+            Degree = Degree + 68.51
+            change = Degree-90 #Makes the required change relative so camera can be at any postition
+            if change >= 7 or change <= -7:
+                servo_position = current_position+change #Calcs the the abs position
+                #move_servo(servo_position) #Moves the servo
+                #print(str(change) + " " + str(x_val) + ' ' + str(Degree))
+                current_position = servo_position #saves current state
+        else:
+            print("Lost red marker")
+        #-----------------
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 cap.release()
 cv2.destroyAllWindows()
+
+# clean_servo()
