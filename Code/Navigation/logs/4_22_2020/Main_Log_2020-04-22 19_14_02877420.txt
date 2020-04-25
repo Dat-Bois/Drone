@@ -1,0 +1,23 @@
+2020-04-22 19:13:44.849753  :  Autopilot Firmware version: APM:Copter-4.0.3
+2020-04-22 19:13:44.849936  :  GPS: GPSInfo:fix=4,num_sat=16
+2020-04-22 19:13:44.850072  :  Battery: Battery:voltage=10.968,current=0.05,level=98
+2020-04-22 19:13:44.850198  :  Is Armable?: True
+2020-04-22 19:13:44.850329  :  System status: STANDBY
+2020-04-22 19:13:44.850396  :  Mode: LAND
+2020-04-22 19:13:44.850452  :  Armed: False
+2020-04-22 19:13:44.851175  :  Arming Motors...
+2020-04-22 19:13:44.852204  :  Mode: LAND
+2020-04-22 19:13:44.853013  :  Waiting for arm...
+2020-04-22 19:13:45.855255  :  ARMED!
+2020-04-22 19:13:45.855377  :  Taking Off
+2020-04-22 19:13:45.856035  :  Altitude: 0.033
+2020-04-22 19:13:46.857878  :  Altitude: 0.045
+2020-04-22 19:13:47.859190  :  Altitude: 0.107
+2020-04-22 19:13:48.860364  :  Altitude: 0.991
+2020-04-22 19:13:49.862169  :  Altitude: 1.773
+2020-04-22 19:13:50.863354  :  Altitude: 2.197
+2020-04-22 19:13:50.863506  :  Reached Target Altitude
+2020-04-22 19:13:54.867600  :  Moving yaw: 30 degrees 1 (-1 ccw & 1 cw)
+2020-04-22 19:13:54.868115  :  Sent yaw command
+2020-04-22 19:13:58.872224  :  Moving yaw: 30 degrees -1 (-1 ccw & 1 cw)
+2020-04-22 19:13:58.872708  :  Sent yaw command

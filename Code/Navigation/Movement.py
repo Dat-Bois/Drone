@@ -72,14 +72,6 @@ def land():
     print("landing now!")
     #vehicle.mode = "LAND"
     vehicle.mode = VehicleMode("LAND")
-    while True:
-        #print (" Altitude: ", vehicle.location.global_relative_frame.alt)
-        log("Altitude: " + str(vehicle.location.global_relative_frame.alt))
-        if (vehicle.location.global_relative_frame.alt <= 0):
-            print("Landed!")
-            log("Landed!")
-            break
-        time.sleep(1)
 
 def setAlt(targetAltitude):
     loc = vehicle.LocationGlobalRelative
@@ -110,11 +102,34 @@ def changeAlt(changeAltitude):
     setAlt(targetAlt)
 
 def changeYaw(heading, rotate):
-    log("Moving yaw: " + heading + " degrees "+rotate+" (-1 ccw & 1 cw)")
+    log("Moving yaw: " + str(heading) + " degrees "+str(rotate)+" (-1 ccw & 1 cw)")
     msg = vehicle.message_factory.command_long_encode(0, 0, mavutil.mavlink.MAV_CMD_CONDITION_YAW, 0, heading, 0, rotate, 1, 0, 0, 0) #Look at movement.py for parameter def.
     # send command to vehicle
     vehicle.send_mavlink(msg)
     log("Sent yaw command")
+    current_heading = int((int(vehicle.attitude.yaw)*(180/3.14159265359)))
+    target_heading =  current_heading + (heading * rotate)
+    if target_heading < 0:
+        target_heading = 360 + target_heading
+    if target_heading > 360:
+        target_heading = target_heading - 360
+    while target_heading != current_heading:
+        current_heading = int((int(vehicle.attitude.yaw)*(180/3.14159265359))) #this makes it wait until the manuver is complete and not any longer
+        log("Current: " + str(current_heading) + "  Target: " + str(target_heading))
+    log("Moved to position")
+
 
 def groundSpeed(speed):
     vehicle.groundspeed = speed
+
+def send_velocity(velocity_x, velocity_y, velocity_z, duration):
+    """
+    Move vehicle in direction based on specified velocity vectors.
+    velocity_x is backward/forward and velocity_y is left/right (m/s)
+    """
+    msg = vehicle.message_factory.set_position_target_local_ned_encode(0, 0, 0, mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED, 0b0000111111000111, 0, 0, 0, velocity_x, velocity_y, velocity_z, 0, 0, 0,0, 0)
+    # send command to vehicle on 1 Hz cycle
+    for x in range(0,duration):
+        vehicle.send_mavlink(msg)
+        time.sleep(1)
+        log("Sent move command: x:" + str(velocity_x) + '  y:' + str(velocity_y) + '  z:' + str(velocity_z))

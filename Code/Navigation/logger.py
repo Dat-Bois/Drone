@@ -10,8 +10,8 @@ def log(log_text):
 
 def flush(file_name):
     global log_list
-    tempFile = '/home/pi/logs/' + file_name + ' ' + str(datetime.datetime.now())
-    tempFile = file_name
+    tempFile = '/home/pi/logs/' + file_name + ' ' + str(datetime.datetime.now() + '.txt')
+    #tempFile = file_name
     file = open(tempFile, "w")
     file.close()
     x=0
